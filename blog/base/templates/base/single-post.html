@@ -1,0 +1,95 @@
+<!-- 'single-post.html' template -->
+
+{% extends 'base/partials/base.html' %}
+{% load static %}
+
+{% block title %}
+    Single Post
+{% endblock title %}
+
+{% block content %}
+    <main id="main">
+        <section class="single-post-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9 post-content" data-aos="fade-up">
+                        <!-- ======= Single Post Content ======= -->
+                        <div class="single-post">
+                            <div class="post-meta">
+                                <span class="date">{{ post.blog_cat }}</span>
+                                <span class="mx-1">&bullet;</span>
+                                <span>{{ post.time_stamp|timesince }}</span>
+                            </div>
+                            <h1 class="mb-5">{{ post.blog_title }}</h1>
+                            <figure class="my-4">
+                                <img src="{{ post.img.url }}" alt="" class="img-fluid">
+                                <figcaption>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, odit?</figcaption>
+                            </figure>
+                            <p><span class="firstcharacter">{{ post.body|slice:":1" }}</span></p>
+                            <h2>{{ post.title }}</h2>
+                            <small class="date">
+                                {{ post.created_on.date }} <span class="mx-1">&bullet;</span>
+                                {% for category in post.categories.all %}
+                                    <a class="post-meta" href="{% url 'category' category.name %}">
+                                        {{ category.name }}
+                                    </a>
+                                {% endfor %}
+                            </small>
+                            <p>{{ post.body|slice:"1:" | linebreaks }}</p>
+
+                            <!-- Comment Form -->
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-lg-12">
+                                    <h5 class="comment-title">Leave a Comment</h5>
+                                    <form method="post" action="{% url 'add_comment' post.id %}">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-12">
+                                                {{ form.body }}
+                                                <button type="submit" class="mt-2 btn btn-primary">Post comment</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- End Comment Form -->
+
+                            <!-- Display Comments -->
+                            <div class="comments">
+                                <h5 class="comment-title py-4">{{ comments.count }} Comments</h5>
+                                {% for comment in comments %}
+                                    <div class="comment d-flex mb-4">
+                                        <div class="flex-shrink-0">
+                                            <div class="avatar avatar-sm rounded-circle">
+                                              {% if comment.author.avatar %}
+                                              <img class="avatar-img" src="{{ comment.author.avatar.url }}" alt="" class="img-fluid">
+                                          {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="flex-grow-1 ms-2 ms-sm-3">
+                                            <div class="comment-meta d-flex align-items-baseline">
+                                                <h6 class="me-2">@{{ comment.author.username }}</h6>
+                                                <span class="text-muted">{{ comment.created_on|timesince }}</span>
+                                            </div>
+                                            <div class="comment-body">
+                                                {{ comment.body }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- End Display Comments -->
+
+                        </div>
+                        <!-- End Single Post Content -->
+                    </div>
+                    <div class="col-md-3">
+                        <!-- Sidebar -->
+                        {% include 'base/partials/sidebar.html' %}
+                        <!-- End Sidebar -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main><!-- End #main -->
+{% endblock content %}

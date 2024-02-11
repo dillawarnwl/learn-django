@@ -1,0 +1,35 @@
+{% load static %}
+<div class="aside-block">
+  <h3 class="aside-title">Latest</h3>
+  <div class="tab-pane fade show active" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab">
+    {% for post in latest_posts %}
+    <div class="post-entry-1 border-bottom">
+      <div class="post-meta">
+        <span class="date">{{ post.categories.first.name }}</span>
+        <span class="mx-1">&bullet;</span>
+        <span>{{ post.created_on|date:'M jS Y' }}</span>
+      </div>
+      <h2 class="mb-2"><a href="{% url 'single-post' pk=post.pk %}">{{ post.title }}</a></h2>
+      <span class="author mb-3 d-block">{{ post.author }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="aside-block">
+  <h3 class="aside-title">Categories</h3>
+  <ul class="aside-links list-unstyled">
+    {% for category in categories %}
+    <li><a href="{% url 'category' category.name %}"><i class="bi bi-chevron-right"></i> {{ category.name }}</a></li>
+    {% endfor %}
+  </ul>
+</div><!-- End Categories -->
+
+<div class="aside-block">
+  <h3 class="aside-title">Tags</h3>
+  <ul class="aside-tags list-unstyled">
+    {% for category in categories %}
+    <li><a href="{% url 'category' category.name %}">{{ category.name }}</a></li>
+    {% endfor %}
+  </ul>
+</div>

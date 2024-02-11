@@ -1,0 +1,43 @@
+{% extends 'base/partials/base.html' %}
+{% load static %}
+
+{% block title %}
+Login
+{% endblock title %}
+
+{% block content %}
+<section style="padding-top: 115px;">
+    <form  id="donor-registration-form" method="post" enctype="multipart/form-data" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.non_field_errors }} <!-- Display non-field errors if any -->
+        {{ form.errors }} <!-- Display form-level errors if any -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-black text-white text- text-center">User Login</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input name="email" id="email" type="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input name="password" id="password" type="password" class="form-control" required>
+                            </div>
+                            <div class="btn-container">
+                                <p class="mb-4 mt-4">New user? <a href="{% url 'signup' %}" class=" text-success">SignUp</a></p>
+                                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            </div>
+                            <div id="error-message" class="text-danger mt-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+{% block scripts %}
+{% endblock scripts %}
+{% endblock content %}

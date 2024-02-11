@@ -1,0 +1,65 @@
+{% load static %}
+<!-- ======= Header ======= -->
+<header id="header" class="header d-flex align-items-center fixed-top">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+    <a href="/" class="logo d-flex align-items-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      {% if user.is_authenticated %}
+      {% if user.avatar %}
+      <div class="avatar avatar-sm rounded-circle">
+        <img src="{{ user.avatar.url }}" alt="user" class="img-fluid avatar-img">
+      </div>
+      {% else %}
+      <div class="avatar avatar-sm rounded-circle">
+        <img src="{% static 'assets/img/person-1.jpg' %}" alt="user" class="img-fluid avatar-img">
+      </div>
+      {% endif %}
+      {% endif %}
+      <h1>PyBlog</h1>
+    </a>
+
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li class="dropdown"><span>Categories</span> <i class="bi bi-chevron-down dropdown-indicator"></i>
+          <ul>
+            {% for category in categories %}
+            <li><a href="{% url 'category' category.name %}">{{ category.name }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </li>
+
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+      </ul>
+    </nav><!-- .navbar -->
+
+    <div class="position-relative">
+      <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
+      <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
+      <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+
+      <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+
+      <!-- ======= Search Form ======= -->
+      <div class="search-form-wrap js-search-form-wrap">
+        <form action="search-result.html" class="search-form">
+          <span class="icon bi-search"></span>
+          <input type="text" placeholder="Search" class="form-control">
+          <button class="btn js-search-close"><span class="bi-x"></span></button>
+        </form>
+      </div><!-- End Search Form -->
+
+    </div>
+
+  </div>
+
+</header><!-- End Header -->
