@@ -1,0 +1,7 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+ {% block branding %}
+     <img src="{% static 'assets/img/favicon.png' %}" alt="logo" style="margin-right: 5px;">
+     <h3 style="color: white;">Dillawar</h3>
+     {{ block.super }}
+ {% endblock %}
